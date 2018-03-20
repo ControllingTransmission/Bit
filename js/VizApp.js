@@ -30,7 +30,7 @@ VizApp = {
         spotLight.position.set(-30, 60, 160);
         spotLight.target.position.set(0, 0, 0);
         
-		spotLight.castShadow = true;
+		//spotLight.castShadow = true;
         /*
 
 		spotLight.shadow.mapSize.width = 1024;
@@ -88,11 +88,11 @@ VizApp = {
 		window.addEventListener('resize', function() { VizApp.onWindowResize() }, false );
 
         setTimeout(() => {
-			Skybox.init();
+			//Skybox.init();
 			
-			var bit = Bit.clone()
-		    this.addObj3d(bit)
-		    
+            var kat = KatamariPrince.clone()
+		    this.addObj3d(kat)
+
 /*			
 		    var s = 15
 		    var d = 1
@@ -113,10 +113,54 @@ VizApp = {
         
         document.addEventListener('keydown', (event) => {
             var c = String.fromCharCode(event.keyCode)
-            console.log("c1 = ", c)
+
+            console.log("c = ", c)
             this._objects.forEach((obj) => { obj.keydown(event, c) })
+
+			if (c == "B") {
+			    var bit = Bit.clone()
+		        this.addObj3d(bit)
+            }
+            
+            if (c == "K") {		 
+                var kat = KatamariPrince.clone()
+		        this.addObj3d(kat)
+	        }
+	        
+	        // background
+
+            if (c == "Q") {
+                this.nextBackground()
+            }
+
+            var n = Number.parseInt(c)
+            if (!isNaN(n)) {
+                this.pickBackground(n)
+            }
+            
         });
+        
+
 	},
+	
+    _backgroundNumber: 0,
+    _backgroundCount: 5,
+    
+    pickBackground: function(n) {
+        if (n >= 0 && n < this._backgroundCount) {
+            this.setBackgroundNumber(n)
+        }
+    },
+    
+    nextBackground: function() {
+        
+        this.setBackgroundNumber(this._backgroundNumber +1)
+    },
+    
+    setBackgroundNumber: function(n) {
+        this._backgroundNumber = n % this._backgroundCount
+        document.body.style.backgroundImage = "url('images/gifs/" + this._backgroundNumber + ".gif')";
+    },
 
     addObj3d: function(obj) {
 		this._objects.push(obj)
@@ -160,7 +204,7 @@ VizApp = {
 		    }
 		}
 
-/*
+    /*
 		TWEEN.update()
 		
 		if (window.Skybox) {
@@ -169,10 +213,7 @@ VizApp = {
 		
 		Skybox.render()
 		*/
-		//this._scene.background = new THREE.Color( 0xff0000 );
-		//this._scene.background = new THREE.Color( 0x2222ff );
 
-        //renderer.setClearColor( new THREE.Color(0xff0000), 1);
 		this._renderer.render(this._scene, this._camera);
 	},
 }

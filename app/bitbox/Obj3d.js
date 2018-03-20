@@ -95,12 +95,12 @@ window.Obj3d = ideal.Proto.clone().newSlots({
         this.animations().remove(anim)
     },
 	
-	addToScene: function(aScene) {
-	    aScene.add(this.object3d())
+	addToScene: function() {
+	    setTimeout(() => { VizApp.addObj3d(this) }, 1)
 	},
 	
-	removeFromScene: function(aScene) {
-	    aScene.remove(this.object3d())
+	removeFromScene: function() {
+	    setTimeout(() => { VizApp.removeObj3d(this) }, 1)
 	},
 	
 	update: function(time) {
@@ -206,20 +206,19 @@ window.Obj3d = ideal.Proto.clone().newSlots({
     },
     
     keydown: function(event, c) {
-        if (c == "X") {
-            this.chooseRandomTargetPosition()
-        }
+
     },
     
     shrinkAndRemove: function() {
         this._initialShrinkScale = this.object3d().scale.x
         this.addAnimation(Obj3dAnimation.clone().setTarget(this).setMethodName("shrinkAndRemoveAnim").setRunTime(1).start())
+        setTimeout(() => { this.removeFromScene() }, 1000)
     },
     
     shrinkAndRemoveAnim: function(dt, r) {
         this.setScale(this._initialShrinkScale * Math.cos(r*Math.PI/2))
         if (r == 1) {
-            this.removeFromScene()
+           // this.removeFromScene()
         }
     },
 })
@@ -303,7 +302,7 @@ window.Obj3dThing = Obj3d.clone().newSlots({
     },
     
     loadedModel: function(object) {
-        this._model = object.clone()
+        this._model = object //.clone()
 	    var s = this.modelScale()
 	    this._model.scale.x = s
 	    this._model.scale.y = s

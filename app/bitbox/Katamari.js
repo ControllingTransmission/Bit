@@ -22,6 +22,8 @@ window.KatamariPrince = Obj3dThing.clone().newSlots({
     },
     
     loadedModel: function(object) {
+        console.log("kat loadedModel")
+        this._model = object
         Obj3dThing.loadedModel.apply(this, [object])
 	    object.rotation.x = -Math.PI/2
 	    object.rotation.z = -Math.PI
@@ -33,10 +35,45 @@ window.KatamariPrince = Obj3dThing.clone().newSlots({
         if (true) {
     	    var o = this.object3d()
     	    //o.rotation.x += 0.01
-    	    o.rotation.y += 0.018 
+    	    //o.rotation.y += 0.018 
     	    //o.rotation.z += 0.018 * Math.cos(time)
         }
+        
+        var r = Math.floor(255 * (0.5 + 0.5*Math.sin(2 * time)) )
+        var b = Math.floor(255 * (0.5 + 0.5*Math.cos(3 * time)) )
+        var g = Math.floor(255 * (0.5 + 0.5*Math.cos(5 * time)) )
+        var c = new THREE.Color("rgb(" + r + "," + g + "," + b + ")")
+        
+        if ( this._model) {
+            //console.log("color = ", c) 
+            this._model.material.color = c
+        }
 	},
+	
+    keydown: function(event, c) {
+        Obj3d.keydown.apply(this, [event, c])
+        //console.log(this.protoType() + " keydown('" + c + "')")
+            
+        /*    
+        if(c == "Y") { 
+            this.bitYes().start()
+            this.bitIdleGroup().startShrinkAnimation()
+        }
+        */
+        
+        /*
+        if (c == "D") {
+            var ball = KatamariBall.clone()
+            ball.object3d().position.copy(this.object3d().position)
+            ball.chooseRandomTargetPosition()
+            ball.addToScene()
+        }
+        */
+        
+        if (c == "L") {
+            this.shrinkAndRemove()
+        }
+    },
 })
 
 // -------------------------------------------------------------------------

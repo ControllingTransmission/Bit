@@ -29,7 +29,6 @@ window.Bit = Obj3d.clone().newSlots({
         if (c == "X") {
             this.chooseRandomTargetPosition()
         }
-                
         
         if (c == "Z") {
             if (Math.random() < 0.5) {
@@ -64,14 +63,6 @@ window.Bit = Obj3d.clone().newSlots({
 
 	update: function(time) {
         Obj3d.update.apply(this, [time])
-	},
-	
-	addToScene: function() {
-	    VizApp.addObj3d(this)
-	},
-	
-	removeFromScene: function() {
-	    VizApp.removeObj3d(this)
 	},
 })
 
