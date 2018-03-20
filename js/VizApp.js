@@ -144,7 +144,7 @@ VizApp = {
 	},
 	
     _backgroundNumber: 0,
-    _backgroundCount: 5,
+    _backgroundCount: 7,
     
     pickBackground: function(n) {
         if (n >= 0 && n < this._backgroundCount) {
