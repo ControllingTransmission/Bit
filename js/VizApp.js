@@ -90,8 +90,8 @@ VizApp = {
         setTimeout(() => {
 			//Skybox.init();
 			
-            var kat = KatamariPrince.clone()
-		    this.addObj3d(kat)
+            //var kat = KatamariPrince.clone()
+		    //this.addObj3d(kat)
 
 /*			
 		    var s = 15
@@ -114,7 +114,7 @@ VizApp = {
         document.addEventListener('keydown', (event) => {
             var c = String.fromCharCode(event.keyCode)
 
-            console.log("c = ", c)
+            //console.log("c = ", c)
             this._objects.forEach((obj) => { obj.keydown(event, c) })
 
 			if (c == "B") {
@@ -138,13 +138,15 @@ VizApp = {
                 this.pickBackground(n)
             }
             
+            if (c == "W") {
+                this.toggleCycleBackground()
+            }
         });
-        
-
 	},
 	
     _backgroundNumber: 0,
-    _backgroundCount: 7,
+    _backgroundCount: 6,
+    _isCyclingBackground: false,
     
     pickBackground: function(n) {
         if (n >= 0 && n < this._backgroundCount) {
@@ -153,15 +155,29 @@ VizApp = {
     },
     
     nextBackground: function() {
-        
         this.setBackgroundNumber(this._backgroundNumber +1)
     },
     
     setBackgroundNumber: function(n) {
-        this._backgroundNumber = n % this._backgroundCount
+        this._backgroundNumber = Math.floor(n) % this._backgroundCount
         document.body.style.backgroundImage = "url('images/gifs/" + this._backgroundNumber + ".gif')";
     },
 
+    toggleCycleBackground: function() {
+        this._isCyclingBackground = !this._isCyclingBackground
+    },
+    
+    cycleBackgroundIfNeeded: function(time) {
+        if (this._isCyclingBackground) {
+            var r = Math.floor((time * 30)) % 5
+            
+            var n = 2 + r
+            //this.setBackgroundNumber( n )
+        }
+    },
+    
+    // ----------------------
+    
     addObj3d: function(obj) {
 		this._objects.push(obj)
 		this._scene.add(obj.object3d())
@@ -204,8 +220,9 @@ VizApp = {
 		    }
 		}
 
-    /*
+        this.cycleBackgroundIfNeeded(time)
 		TWEEN.update()
+    /*
 		
 		if (window.Skybox) {
 		    Skybox.update()

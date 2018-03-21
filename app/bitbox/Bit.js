@@ -12,18 +12,26 @@ window.Bit = Obj3d.clone().newSlots({
     	return this
     },
     
+    doBitYes: function() {
+        this.bitYes().start()
+        this.bitIdleGroup().startShrinkAnimation()       
+    },
+    
+    doBitNo: function() {
+        this.bitNo().start()
+        this.bitIdleGroup().startShrinkAnimation()
+    },
+    
     keydown: function(event, c) {
         Obj3d.keydown.apply(this, [event, c])
         //console.log(this.protoType() + " keydown('" + c + "')")
                 
         if(c == "Y") { 
-            this.bitYes().start()
-            this.bitIdleGroup().startShrinkAnimation()
+            this.doBitYes()
         }
         
         if(c == "N") { 
-            this.bitNo().start()
-            this.bitIdleGroup().startShrinkAnimation()
+            this.doBitNo()
         }
         
         if (c == "X") {
@@ -43,9 +51,23 @@ window.Bit = Obj3d.clone().newSlots({
         }
     },
     
+    chooseRandomTargetPosition: function() {
+        Obj3d.chooseRandomTargetPosition.apply(this)
+          //  this.doBitYes()
+
+        if (Math.random() < 0.33) {
+            this.doBitYes()
+        } else {
+         if (Math.random() < 0.5) {
+             this.doBitNo()
+          }
+        }
+    },
+    
     duplicate: function() {
         var dup = this.clone()
         dup.object3d().position.copy(this.object3d().position)
+        setTimeout(() => { dup.shrinkAndRemove() }, 5000)
         return dup
     },
 

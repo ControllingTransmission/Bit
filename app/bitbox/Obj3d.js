@@ -57,7 +57,7 @@ window.Obj3d = ideal.Proto.clone().newSlots({
 	children: null,
 	animations: null,
 	targetPosition: null,
-	targetRate: 0.05,
+	targetRate: 0.04,
 }).setSlots({
     init: function() {   
         this.setObject3d(new THREE.Object3D())
@@ -120,7 +120,10 @@ window.Obj3d = ideal.Proto.clone().newSlots({
 	        var d = this.targetPosition().clone().sub(this.object3d().position)
 	        d.multiplyScalar(this.targetRate())
 	        this.object3d().position.add(d)
-	        
+
+	        if (d.length() < 0.1) {
+	            this.chooseRandomTargetPosition()
+            }
 	        if (d.length() < 0.01) {
 	            //this.object3d().position = this.targetPosition()
 	            this.setTargetPosition(null)
@@ -202,6 +205,9 @@ window.Obj3d = ideal.Proto.clone().newSlots({
             shading: THREE.FlatShading,
             shininess: 50,
         })
+        
+        material.transparent = true
+
         return material
     },
     
