@@ -29,6 +29,7 @@ window.KatamariPrince = Obj3dThing.clone().newSlots({
 	    object.rotation.z = -Math.PI
 	    this.useTexture()
         this.setOpacity(0)
+        this.fadeOut()
     },    
     
     useTexture: function() {
@@ -133,7 +134,7 @@ window.KatamariPrince = Obj3dThing.clone().newSlots({
     
     fadeOut: function() {
          var tween = new TWEEN.Tween(this._model.material) // Create a new tween that modifies 'coords'.
-        .to({ opacity: 0 }, 1000) // Move to (300, 200) in 1 second.
+        .to({ opacity: 0.2 }, 1000) // Move to (300, 200) in 1 second.
         .easing(TWEEN.Easing.Quadratic.Out) // Use an easing function to make the animation smooth.
         .onUpdate(function() { // Called after tween.js updates 'coords'.
             // Move 'box' to the position described by 'coords' with a CSS translation.
@@ -152,6 +153,7 @@ window.KatamariPrince = Obj3dThing.clone().newSlots({
     },
 })
 
+
 // -------------------------------------------------------------------------
 
 window.KatamariBall = Obj3dThing.clone().newSlots({ 
@@ -163,9 +165,34 @@ window.KatamariBall = Obj3dThing.clone().newSlots({
 	targetRate: 0.01,
 }).setSlots({
     init: function() {        
-        Obj3dThing.init.apply(this)
+        Obj3dThing.init.apply(this)        
         this.setScale(1)
+        this.place()
+        this._rdx = Math.random() - .5
+        this._rdz = Math.random() - .5
         return this
+    },
+    
+    place: function() {
+    	var o = this.object3d()
+    	var r = 30
+    	o.position.x = (Math.random() - .5)*r    
+    	o.position.y = (Math.random() - .5)*r      
+    	o.position.z = 20 // Math.random()*r
+    },
+    
+    materialColor: function() {
+        var colors = ["red", "green", "blue"]
+        var colors = COLORSETS[1]
+        var c = new THREE.Color(colors[Math.floor(Math.random()*colors.length)])
+        return c
+        /*
+        var r = Math.floor(255 * Math.random() )
+        var b = Math.floor(255 * Math.random() )
+        var g = Math.floor(255 * Math.random() )
+        var c = new THREE.Color("rgb(" + r + "," + g + "," + b + ")")
+        return c
+        */
     },
     
     start: function() {
@@ -182,9 +209,14 @@ window.KatamariBall = Obj3dThing.clone().newSlots({
         if (true) {
     	    var o = this.object3d()
     	    var rate = 0.058
-    	    //o.rotation.x += 0.01
-    	    o.rotation.z -= rate 
+    	    o.rotation.x += this._rdx * rate
+    	    o.rotation.z -= this._rdz * rate
+    	    o.position.z -= 0.5 //+ Math.abs(o.position.z)*0.1
     	    //o.rotation.z += rate * Math.cos(time)
+    	    if (o.position.z < - 400) {
+    	        this.removeFromScene()
+    	    }
+    	        
         }
 	},
 	

@@ -122,6 +122,11 @@ VizApp = {
 		        this.addObj3d(bit)
             }
             
+			if (c == "F") {
+                var ball = KatamariBall.clone()
+		        this.addObj3d(ball)
+            }
+            
             if (c == "K") {		 
                 var kat = KatamariPrince.clone()
 		        this.addObj3d(kat)
@@ -150,7 +155,7 @@ VizApp = {
     
     pickBackground: function(n) {
         if (n >= 0 && n < this._backgroundCount) {
-            this.setBackgroundNumber(n)
+            this.setBackgroundNumber(n-1)
         }
     },
     
