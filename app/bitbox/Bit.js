@@ -9,6 +9,7 @@ window.Bit = Obj3d.clone().newSlots({
         Obj3d.init.apply(this)
         this.setScale(5)
         this.initParts()
+        this.scaleIn()
     	return this
     },
     
@@ -86,6 +87,20 @@ window.Bit = Obj3d.clone().newSlots({
 	update: function(time) {
         Obj3d.update.apply(this, [time])
 	},
+	
+    scaleIn: function() {
+         
+        var s = this.object3d().scale.x
+        console.log("this.object3d().scale = ", this.object3d().scale)
+        console.log("s = ", s)
+        this.setScale(0.001)
+        
+        var tween = new TWEEN.Tween(this.object3d().scale) 
+        .to( { x:s, y:s, z:s }, 1000) 
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .start();            
+    },
+    
 })
 
 

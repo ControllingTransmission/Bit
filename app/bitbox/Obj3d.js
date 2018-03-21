@@ -168,6 +168,10 @@ window.Obj3d = ideal.Proto.clone().newSlots({
 	    return this
     },
     
+    scale: function() {
+        return this.object3d().x
+    },
+    
     setX: function(v) {
 	    this.object3d().position.x = v
 	    return this

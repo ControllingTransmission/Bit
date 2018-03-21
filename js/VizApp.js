@@ -122,7 +122,7 @@ VizApp = {
 		        this.addObj3d(bit)
             }
             
-			if (c == "F") {
+			if (c == "G") {
                 var ball = KatamariBall.clone()
 		        this.addObj3d(ball)
             }
