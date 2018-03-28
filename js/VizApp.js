@@ -104,11 +104,13 @@ VizApp = {
         
         
         document.addEventListener('touchstart', function(e) {
+            console.log("touchstart")
             VizApp.touchstart(e)
         }, false);
         
         document.addEventListener('touchend', function(e) {
-            VizApp.touchend(e)
+             console.log("touchend")
+           VizApp.touchend(e)
         }, false);
         
         
@@ -137,11 +139,15 @@ VizApp = {
 	pressKey: function(keyString) {
         var event = document.createEvent('KeyboardEvent');
         event.keyCode = keyString.charCodeAt(0)
-        VizApp.keydown(event)            
+	    //console.log("keyString = '" + keyString + "' code = ", event.keyCode, " string = ", String.fromCharCode(event.keyCode))
+        //console.log("event = ", event)
+        VizApp.keydown(event, keyString)            
 	},
 	
-	keydown: function(event) {
-	        var c = String.fromCharCode(event.keyCode)
+	keydown: function(event, c) {
+	        if (!c) {
+	            c = String.fromCharCode(event.keyCode)
+	        }
 
             //console.log("c = ", c)
             this._objects.forEach((obj) => { obj.keydown(event, c) })
@@ -207,11 +213,16 @@ VizApp = {
         var y = e.changedTouches[0].clientY
         var dx = x - this._touchClientX;
         var dy = y - this._touchClientY;
-
-        if (dx*dx + dy*dy < 10) {
-            if (x < 1/3) {
+        var d = dx*dx + dy*dy
+        
+        //console.log("VizApp touchend ", rx, y, d)
+        
+        var rx = x / window.innerWidth
+        
+        if (d < 10) {
+            if (rx < 1/3) {
                VizApp.pressKey("Y")
-            } else if (x < 2/3) {
+            } else if (rx < 2/3) {
                VizApp.pressKey("M")
             } else {
                VizApp.pressKey("N")
