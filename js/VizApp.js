@@ -102,23 +102,15 @@ VizApp = {
            //Ground.shared().update()
         }, 1000)
         
-
         
-        document.onclick = function (event) {
-            var rx = event.clientX / window.innerWidth
-            var ry = event.clientY / window.innerHeight
-            
-            //console.log("mousedown ", rx, ry)
-            
-            if (rx < 1/3) {
-                event.keyCode = "Y".charCodeAt(0)
-            } else if (rx < 2/3) {
-                event.keyCode = "M".charCodeAt(0)
-            } else {
-                event.keyCode = "N".charCodeAt(0)
-            }
-            VizApp.keydown(event)            
-        }
+        document.addEventListener('touchstart', function(e) {
+            VizApp.touchstart(e)
+        }, false);
+        
+        document.addEventListener('touchend', function(e) {
+            VizApp.touchend(e)
+        }, false);
+        
         
         ControlsElement = function() {
             return document.getElementById("controls")
@@ -139,12 +131,17 @@ VizApp = {
         document.addEventListener('keydown', (event) => {
             this.keydown(event)
         });
-        
  
 	},
 	
+	pressKey: function(keyString) {
+        var event = document.createEvent('KeyboardEvent');
+        event.keyCode = keyString.charCodeAt(0)
+        VizApp.keydown(event)            
+	},
+	
 	keydown: function(event) {
-	                var c = String.fromCharCode(event.keyCode)
+	        var c = String.fromCharCode(event.keyCode)
 
             //console.log("c = ", c)
             this._objects.forEach((obj) => { obj.keydown(event, c) })
@@ -198,6 +195,30 @@ VizApp = {
                 this.toggleCycleBackground()
             }
     },
+    
+    touchstart: function(e) {
+        // Cache the client X/Y coordinates
+        this._touchClientX = e.touches[0].clientX;
+        this._touchClientY = e.touches[0].clientY;
+    },
+
+    touchend: function(e) {
+        var x = e.changedTouches[0].clientX
+        var y = e.changedTouches[0].clientY
+        var dx = x - this._touchClientX;
+        var dy = y - this._touchClientY;
+
+        if (dx*dx + dy*dy < 10) {
+            if (x < 1/3) {
+               VizApp.pressKey("Y")
+            } else if (x < 2/3) {
+               VizApp.pressKey("M")
+            } else {
+               VizApp.pressKey("N")
+            }
+        }
+    },
+
     
     _backgroundNumber: 0,
     _backgroundCount: 6,
