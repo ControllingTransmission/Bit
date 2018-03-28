@@ -104,7 +104,7 @@ VizApp = {
         
 
         
-        document.onmousedown = function (event) {
+        document.onclick = function (event) {
             var rx = event.clientX / window.innerWidth
             var ry = event.clientY / window.innerHeight
             
