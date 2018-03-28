@@ -87,6 +87,7 @@ Spectrum = {
 
 	initAudio: function() 
 	{
+	    console.trace("Spectrum.initAudio()")
 	    if (!navigator.getUserMedia)
 		{
 	        navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
