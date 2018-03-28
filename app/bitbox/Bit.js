@@ -35,11 +35,11 @@ window.Bit = Obj3d.clone().newSlots({
             this.doBitNo()
         }
         
-        if (c == "X") {
+        if (c == "M") {
             this.chooseRandomTargetPosition()
         }
         
-        if (c == "Z") {
+        if (c == "R") {
             if (Math.random() < 0.5) {
                 this.shrinkAndRemove()
             }
@@ -52,6 +52,7 @@ window.Bit = Obj3d.clone().newSlots({
         }
     },
     
+    /*
     chooseRandomTargetPosition: function() {
         Obj3d.chooseRandomTargetPosition.apply(this)
           //  this.doBitYes()
@@ -64,6 +65,7 @@ window.Bit = Obj3d.clone().newSlots({
           }
         }
     },
+    */
     
     duplicate: function() {
         var dup = this.clone()
@@ -91,8 +93,8 @@ window.Bit = Obj3d.clone().newSlots({
     scaleIn: function() {
          
         var s = this.object3d().scale.x
-        console.log("this.object3d().scale = ", this.object3d().scale)
-        console.log("s = ", s)
+        //console.log("this.object3d().scale = ", this.object3d().scale)
+        //console.log("s = ", s)
         this.setScale(0.001)
         
         var tween = new TWEEN.Tween(this.object3d().scale) 

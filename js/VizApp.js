@@ -87,29 +87,26 @@ VizApp = {
 		this._container.appendChild(this._renderer.domElement);
 		window.addEventListener('resize', function() { VizApp.onWindowResize() }, false );
 
+        //Spectrum.setup()
+        
         setTimeout(() => {
 			//Skybox.init();
 			
+			var bit = Bit.clone()
+		    this.addObj3d(bit)
+            
             //var kat = KatamariPrince.clone()
 		    //this.addObj3d(kat)
 
-/*			
-		    var s = 15
-		    var d = 1
-			for (var x = -d; x < d+1; x ++) {
-			for (var y = -d; y < d+1; y ++) {
-			for (var z = -d; z < d; z ++) {
-                //var bit = Bit.clone().setX(x*s).setY(y*s).setZ(z*s)
-                //var bit = KatamariPrince.clone().setX(x*s).setY(y*s).setZ(z*s)
-			    var bit = KatamariBall.clone().setX(x*s).setY(y*s).setZ(z*s)
-			    this.addObj3d(bit)
-			    
-			    //bit.chooseRandomTargetPosition()
-		    }}}
-		    */
 		    this.animate();			        
            //Ground.shared().update()
         }, 1000)
+        
+        ControlsElement = function() {
+            return document.getElementById("controls")
+        }
+        
+        ControlsElement().style.opacity = 1
         
         document.addEventListener('keydown', (event) => {
             var c = String.fromCharCode(event.keyCode)
@@ -117,7 +114,7 @@ VizApp = {
             //console.log("c = ", c)
             this._objects.forEach((obj) => { obj.keydown(event, c) })
 
-			if (c == "B") {
+			if (c == "A") {
 			    var bit = Bit.clone()
 		        this.addObj3d(bit)
             }
@@ -127,13 +124,27 @@ VizApp = {
 		        this.addObj3d(ball)
             }
             
+            if (c == "C") {
+                var e = ControlsElement();
+                //console.log("toggle controls opacity = ", e.style.opacity)
+                
+                if (e.style.opacity != 0) {
+                    e.style.opacity = 0
+                } else {
+                    e.style.opacity = 1
+                }
+            }
+
+            /*
             if (c == "K") {		 
                 var kat = KatamariPrince.clone()
 		        this.addObj3d(kat)
 	        }
+	        */
 	        
 	        // background
 
+            /*
             if (c == "Q") {
                 this.nextBackground()
             }
@@ -144,6 +155,11 @@ VizApp = {
             }
             
             if (c == "W") {
+                this.toggleCycleBackground()
+            }
+            */
+            
+            if (c == "H") {
                 this.toggleCycleBackground()
             }
         });
@@ -210,7 +226,7 @@ VizApp = {
 
 	render: function() 
 	{
-		var bins = Spectrum.timeStep()
+		//var bins = Spectrum.timeStep()
         var time = new Date().getTime()/1000
         
 		for(var i = 0; i < this._objects.length; i++) {
@@ -220,15 +236,17 @@ VizApp = {
 		        child.update(time) 
 		    }
 		    
+		    /*
 		    if (child.updateAudio) { 
 		        child.updateAudio(bins) 
 		    }
+		    */
 		}
 
         this.cycleBackgroundIfNeeded(time)
 		TWEEN.update()
-    /*
-		
+
+        /*
 		if (window.Skybox) {
 		    Skybox.update()
 	    }

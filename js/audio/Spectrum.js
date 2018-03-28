@@ -110,4 +110,4 @@ Spectrum = {
 	}
 }
 
-Spectrum.setup()
+//Spectrum.setup()

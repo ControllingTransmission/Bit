@@ -121,9 +121,12 @@ window.Obj3d = ideal.Proto.clone().newSlots({
 	        d.multiplyScalar(this.targetRate())
 	        this.object3d().position.add(d)
 
+            /*
 	        if (d.length() < 0.1) {
 	            this.chooseRandomTargetPosition()
             }
+            */
+            
 	        if (d.length() < 0.01) {
 	            //this.object3d().position = this.targetPosition()
 	            this.setTargetPosition(null)
@@ -269,7 +272,7 @@ window.Obj3dThing = Obj3d.clone().newSlots({
     
     speak: function() {
         if (this.audio()) {
-            //this.audio().play()
+            this.audio().play()
         }
     },
 
