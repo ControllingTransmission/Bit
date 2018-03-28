@@ -1,8 +1,8 @@
-# Bit and Box visuals by Controlling Transmission for GDC 2018 
+# Bit visual by Controlling Transmission for GDC 2018 
 
 # How to use:
 
-Requires python server with SSL support for browser microphone support. 
+To run locally, requires python server. 
 Run in code folder with command:
 
     python server.py

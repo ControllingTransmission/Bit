@@ -100,6 +100,7 @@ Spectrum = {
 	
 	setup: function()
 	{
+	    console.trace("Spectrum.setup()")
 		this._audioContext = new AudioContext();
 		this._audioInput = null
 		this._realAudioInput = null
