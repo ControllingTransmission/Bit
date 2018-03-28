@@ -140,7 +140,7 @@ VizApp = {
         var event = document.createEvent('KeyboardEvent');
         event.keyCode = keyString.charCodeAt(0)
 	    //console.log("keyString = '" + keyString + "' code = ", event.keyCode, " string = ", String.fromCharCode(event.keyCode))
-        //console.log("event = ", event)
+        console.log("event = ", event)
         VizApp.keydown(event, keyString)            
 	},
 	
