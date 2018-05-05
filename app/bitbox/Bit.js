@@ -50,6 +50,38 @@ window.Bit = Obj3d.clone().newSlots({
             dup.chooseRandomTargetPosition()
             dup.addToScene()
         }
+        
+        if (c == " ") {
+            this._spaceKeyDownDate = Date.now()
+        }
+    },
+    
+    doRandomAnwer: function() {
+        var flip = Math.random() > 0.5
+        if (flip) {
+            this.doBitYes()
+        } else { 
+            this.doBitNo()
+        }
+    },
+    
+    keyup: function(event, c) {
+        var dt = (Date.now() - this._spaceKeyDownDate)
+        console.log("keyup '" + c + "' dt=", dt)
+        if (dt > 2) {
+            var count = 1 + Math.floor(Math.random() * 5)
+            var nextFunc = () => { 
+                count --
+                if (count > 0) {
+                    this.chooseRandomTargetPosition(20, nextFunc)
+                } else {
+                    this.doRandomAnwer()
+                }
+            }
+                
+            this.chooseRandomTargetPosition(20, nextFunc)
+
+        }
     },
     
     /*

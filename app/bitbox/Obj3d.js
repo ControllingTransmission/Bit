@@ -126,15 +126,21 @@ window.Obj3d = ideal.Proto.clone().newSlots({
 	            this.chooseRandomTargetPosition()
             }
             */
+	        //console.log("d.length() = ", d.length())
             
-	        if (d.length() < 0.01) {
+	        if (d.length() < 0.3) {
+	            //console.log("next")
 	            //this.object3d().position = this.targetPosition()
 	            this.setTargetPosition(null)
+	            if (this._endMoveFunc) {
+	                this._endMoveFunc()
+	            }
 	        }
 	    }
 	},
 	
-	chooseRandomTargetPosition: function(r) {
+	chooseRandomTargetPosition: function(r, nextFunc) {
+	    console.log("chooseRandomTargetPosition")
 	    if (!r) {
 	        r = 20
 	    }
@@ -150,6 +156,7 @@ window.Obj3d = ideal.Proto.clone().newSlots({
 	    t.z = r * (-Math.random()*2)
 	    
 	    this.setTargetPosition(t)
+	    this._endMoveFunc = nextFunc
 	    return this
 	},
 	

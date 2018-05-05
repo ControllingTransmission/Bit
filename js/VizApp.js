@@ -133,6 +133,10 @@ VizApp = {
         document.addEventListener('keydown', (event) => {
             this.keydown(event)
         });
+        
+        document.addEventListener('keyup', (event) => {
+            this.keyup(event)
+        });
  
 	},
 	
@@ -144,6 +148,16 @@ VizApp = {
         VizApp.keydown(event, keyString)            
 	},
 	
+	keyup: function(event, c) {
+        if (!c) {
+            c = String.fromCharCode(event.keyCode)
+        }
+
+        //console.log("c = ", c)
+        this._objects.forEach((obj) => { obj.keyup(event, c) })
+    },
+    
+    
 	keydown: function(event, c) {
 	        if (!c) {
 	            c = String.fromCharCode(event.keyCode)
